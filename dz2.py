@@ -1,7 +1,7 @@
 import networkx as nx
 import matplotlib.pyplot as plt
 
-# Initialize the automata
+# Инициализация автоматов
 L1_transitions = {
     'q0': {'1': 'q0', '0': 'q1'},
     'q1': {'1': 'q0', '0': 'q2'},
@@ -20,7 +20,7 @@ L_union_transitions = {}
 L_intersection_final = set()
 L_union_final = set()
 
-# Calculate the transitions and final states for the resulting automata
+# Вычисляем переходы и конечные состояния для результирующих автоматов
 for state1 in L1_transitions:
     for state2 in L2_transitions:
         combined_state = (state1, state2)
@@ -37,7 +37,7 @@ for state1 in L1_transitions:
                 L_intersection_transitions[combined_state][symbol] = combined_next_state
                 L_union_transitions[combined_state][symbol] = combined_next_state
                 
-                # Check for final states
+                # Проверка на конечные состояния
                 if next_state1 in L1_final and next_state2 in L2_final:
                     L_intersection_final.add(combined_next_state)
                 if next_state1 in L1_final or next_state2 in L2_final:
@@ -63,13 +63,13 @@ def draw_automaton(transitions, final_states, title):
     plt.title(title)
     plt.show()
 
-# Plotting the intersection and union automata
-draw_automaton(L_intersection_transitions, L_intersection_final, "Intersection Automaton (L1 AND L2)")
-draw_automaton(L_union_transitions, L_union_final, "Union Automaton (L1 OR L2)")
+# Визуализация автоматов пересечения и объединения
+draw_automaton(L_intersection_transitions, L_intersection_final, "Автомат пересечения (L1 И L2)")
+draw_automaton(L_union_transitions, L_union_final, "Автомат объединения (L1 ИЛИ L2)")
 
 import pandas as pd
 
-# Convert the transitions to table format
+# Преобразование переходов в табличный формат
 def transitions_to_table(transitions):
     table_data = []
     
@@ -81,7 +81,7 @@ def transitions_to_table(transitions):
         
     return pd.DataFrame(table_data).fillna('-')
 
-# Get the tables for intersection and union automata
+# Получение таблиц для автоматов пересечения и объединения
 intersection_table = transitions_to_table(L_intersection_transitions)
 union_table = transitions_to_table(L_union_transitions)
 
